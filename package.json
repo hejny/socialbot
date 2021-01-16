@@ -1,0 +1,19 @@
+{
+  "name": "socialbot",
+  "version": "0.1.0",
+  "description": " Share on social networks via headless puppeteer remotely controlled by webhook API.",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hejny/socialbot.git"
+  },
+  "author": "Pavol Hejny <me@pavolhejny.com> (https://pavolhejny.com)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/hejny/socialbot/issues"
+  },
+  "homepage": "https://github.com/hejny/socialbot#readme"
+}
