@@ -12,6 +12,10 @@
         {
             "name": "expose",
             "command": "npm run expose"
+        },
+        {
+            "name": "ssh",
+            "command": "ssh root@pavolhejny.com"
         }
     ]
 }
