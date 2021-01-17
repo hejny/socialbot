@@ -27,6 +27,9 @@ async function createFacebookSession() {
 }
 
 async function main() {
+    const postText = `test ${Math.random()}`;
+    const postTextFirstLine = postText.split('\n', 2)[0].trim();
+
     const session = await createFacebookSession();
 
     await clickElement(session.page, xpathText(/*What's */ ` on your mind`));
@@ -35,10 +38,17 @@ async function main() {
 
     //await session.page.keyboard.type('test');
 
-    element?.type(`test ${Math.random()}`, { delay: 50 });
-    await forTime(2000);
+    await element?.type(postText, { delay: 50 });
+    await forTime(500);
 
     await clickElement(session.page, `//div[@data-sigil='bottom_submit_composer']`);
+    await forTime(2000);
+    await clickElement(session.page, xpathText(postTextFirstLine));
+
+    await forTime(500);
+    const postUrl = session.page.url().split('m.facebook.com').join('facebook.com');
+
+    return { postUrl };
 
     await forEver();
     session.page.close();
