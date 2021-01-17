@@ -28,17 +28,19 @@ async function createFacebookSession() {
 
 async function main() {
     const postText = `test ${Math.random()}`;
+    const commentText = `test comment ${Math.random()}`;
+
     const postTextFirstLine = postText.split('\n', 2)[0].trim();
 
     const session = await createFacebookSession();
 
-    await clickElement(session.page, xpathText(/*What's */ ` on your mind`));
+    await clickElement(session.page, xpathText(/*What's */ `on your mind`));
     await forTime(50);
-    const element = await getElement(session.page, `//textarea`);
+    const elementToWritePost = await getElement(session.page, `//textarea`);
 
     //await session.page.keyboard.type('test');
 
-    await element?.type(postText, { delay: 50 });
+    await elementToWritePost?.type(postText, { delay: 50 });
     await forTime(500);
 
     await clickElement(session.page, `//div[@data-sigil='bottom_submit_composer']`);
@@ -46,15 +48,39 @@ async function main() {
     await clickElement(session.page, xpathText(postTextFirstLine));
 
     await forTime(500);
-    const postUrl = session.page.url().split('m.facebook.com').join('facebook.com');
+    const postUrlMobile = session.page.url();
+    const postUrl = postUrlMobile.split('m.facebook.com').join('facebook.com');
 
+    // TODO: Return here
+
+    await writeACommentOnFacebookPost({ page: session.page, postUrlMobile, commentText });
+
+    console.log({ postUrl });
     return { postUrl };
 
     await forEver();
+    await forTime(1000);
     session.page.close();
 }
 
 main();
+
+async function writeACommentOnFacebookPost({
+    page,
+    postUrlMobile,
+    commentText,
+}: {
+    page: Page;
+    postUrlMobile: string;
+    commentText: string;
+}) {
+    // Note: loading a fresh app to get expected behaviour
+    await page.goto(postUrlMobile);
+    const elementToWriteComment = await getElement(page, `//textarea`);
+    await elementToWriteComment?.type(commentText, { delay: 50 });
+    await forTime(2000 /* Need to wait longer to get the button Post active... */);
+    await clickElement(page, `//button[@value='Post']`);
+}
 
 async function clickElement(page: Page, xpath: string) {
     const element = await getElement(page, xpath);
@@ -68,7 +94,7 @@ async function getElement(page: Page, xpath: string) {
     return elements[elements.length - 1];
 }
 
-function xpathText(text: string) {
+function xpathText(text: string, elementTag = '*') {
     // TODO: escaping
-    return `//*[contains(text(), '${text}')]`;
+    return `//${elementTag}[contains(text(), '${text}')]`;
 }
