@@ -1,0 +1,9 @@
+{
+    "autokill": true,
+    "terminals": [
+        {
+            "name": "start",
+            "command": "nam start"
+        }
+    ]
+}

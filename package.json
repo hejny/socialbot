@@ -2,10 +2,7 @@
   "name": "socialbot",
   "version": "0.1.0",
   "description": " Share on social networks via headless puppeteer remotely controlled by webhook API.",
-  "main": "src/index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "./src/index.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hejny/socialbot.git"
@@ -15,5 +12,23 @@
   "bugs": {
     "url": "https://github.com/hejny/socialbot/issues"
   },
-  "homepage": "https://github.com/hejny/socialbot#readme"
+  "homepage": "https://github.com/hejny/socialbot#readme",
+  "dependencies": {
+    "@types/puppeteer": "^5.4.2",
+    "configchecker": "^1.3.0",
+    "dotenv": "^8.2.0",
+    "puppeteer": "^5.5.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3",
+    "waitasecond": "^1.5.0"
+  },
+  "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "eslint": "^7.18.0"
+  }
 }
