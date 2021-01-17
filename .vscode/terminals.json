@@ -3,7 +3,15 @@
     "terminals": [
         {
             "name": "start",
-            "command": "nam start"
+            "command": "npm start"
+        },
+        {
+            "name": "develop",
+            "command": "npm run develop"
+        },
+        {
+            "name": "expose",
+            "command": "npm run expose"
         }
     ]
 }

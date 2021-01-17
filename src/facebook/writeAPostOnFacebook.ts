@@ -25,8 +25,8 @@ export async function writeAPostOnFacebook({
 
     await clickElement(page, `//div[@data-sigil='bottom_submit_composer']`);
     await forTime(2000);
-    const postTextFirstLine = postText.split('\n', 2)[0].trim();
-    await clickElement(page, xpathText(postTextFirstLine));
+    const postTextFirstMatchingPart = (/[\u1F600-\u1F6FF\s]+/.exec(postText) || '')[0].trim();
+    await clickElement(page, xpathText(postTextFirstMatchingPart));
 
     await forTime(500);
     const postUrlMobile = page.url();

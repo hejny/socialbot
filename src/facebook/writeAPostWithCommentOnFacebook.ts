@@ -12,6 +12,8 @@ export async function writeAPostWithCommentOnFacebook({
     postText: string;
     commentText: string;
 }): Promise<{ postUrl: string }> {
+    console.info(`Posting on Facebook Post+Comment`, { postText, commentText });
+
     const browser = await puppeteer.launch({ headless: false });
     const page = (await browser.pages())[0]; // TODO: maybe await browser.newPage();
     await setFacebookCookies(page);

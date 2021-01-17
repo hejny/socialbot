@@ -1,13 +1,37 @@
+import express from 'express';
+import bodyParser from 'body-parser';
+import { PORT } from './config';
+import { version } from '../package.json';
 import { writeAPostWithCommentOnFacebook } from './facebook/writeAPostWithCommentOnFacebook';
 
-async function main() {
-    const postText = `test ${Math.random()}`;
-    const commentText = `test comment ${Math.random()}`;
+const app = express();
 
-    const { postUrl } = await writeAPostWithCommentOnFacebook({ postText, commentText });
+// Note: Not using json because Integromat better works withs query string + raw text.
+app.use(bodyParser.text());
 
-    console.log({ postUrl });
-    return { postUrl };
-}
+app.get(['/', '/about'], (request, response) => {
+    response.send({
+        version,
+    });
+});
 
-main();
+app.post('/post', async (request, response) => {
+    const postText = request.body;
+    const commentText = request.query.commentText as string;
+
+    if (!postText && !commentText && typeof postText !== 'string' && typeof commentText !== 'string') {
+        response.status(400).send({ error: `You have not provided postText and commentText.` });
+    }
+
+    const { postUrl } = await writeAPostWithCommentOnFacebook({
+        postText,
+        commentText,
+    });
+
+    response.send({ postUrl });
+});
+
+app.listen(PORT, () => {
+    console.info('██████████████████████████████████████████');
+    console.info(`API is running at http://localhost:${PORT}`);
+});
