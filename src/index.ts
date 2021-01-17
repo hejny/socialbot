@@ -30,9 +30,15 @@ async function main() {
     const session = await createFacebookSession();
 
     await clickElement(session.page, xpathText(/*What's */ ` on your mind`));
-    await clickElement(session.page, `//textarea`);
+    await forTime(50);
+    const element = await getElement(session.page, `//textarea`);
 
-    await session.page.keyboard.type('test');
+    //await session.page.keyboard.type('test');
+
+    element?.type(`test ${Math.random()}`, { delay: 50 });
+    await forTime(2000);
+
+    await clickElement(session.page, `//div[@data-sigil='bottom_submit_composer']`);
 
     await forEver();
     session.page.close();
@@ -46,9 +52,10 @@ async function clickElement(page: Page, xpath: string) {
 }
 
 async function getElement(page: Page, xpath: string) {
-    const [element] = await page.$x(xpath);
-    //console.log({ element });
-    return element || null;
+    const elements = await page.$x(xpath);
+
+    if (elements.length === 0) return null;
+    return elements[elements.length - 1];
 }
 
 function xpathText(text: string) {
