@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import { forTime } from 'waitasecond';
+import { PUPPETEER_LAUNCH_OPTIONS } from '../config';
 
 import { setFacebookCookies } from './setFacebookCookies';
 import { writeACommentOnFacebookPost } from './writeACommentOnFacebookPost';
@@ -14,7 +15,7 @@ export async function writeAPostWithCommentOnFacebook({
 }): Promise<{ postUrl: string }> {
     console.info(`Posting on Facebook Post+Comment`, { postText, commentText });
 
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch(PUPPETEER_LAUNCH_OPTIONS);
     const page = (await browser.pages())[0]; // TODO: maybe await browser.newPage();
     await setFacebookCookies(page);
 

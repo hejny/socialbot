@@ -11,7 +11,7 @@ export async function writeACommentOnFacebookPost({
     page: Page;
     postUrlMobile: string;
     commentText: string;
-}) {
+}): Promise<void> {
     // Note: loading a fresh app to get expected behaviour
     await page.goto(postUrlMobile);
     const elementToWriteComment = await getElement(page, `//textarea`);
