@@ -24,6 +24,9 @@ export async function writeAPostOnFacebook({
     await forTime(500);
 
     await clickElement(page, `//div[@data-sigil='bottom_submit_composer']`);
+
+    // TODO: Handle error "This post is same..."
+
     await forTime(2000);
     const postTextFirstMatchingPart = (/[\u1F600-\u1F6FF\s]+/.exec(postText) || '')[0].trim();
     await clickElement(page, xpathText(postTextFirstMatchingPart));

@@ -16,6 +16,8 @@ app.get(['/', '/about'], (request, response) => {
 });
 
 app.post('/post', async (request, response) => {
+    // TODO: Add here some token to check identity of the request
+
     const postText = request.body;
     const commentText = request.query.commentText as string;
 
