@@ -28,12 +28,16 @@ export async function writeAPostOnFacebook({
     // TODO: Handle error "This post is same..."
 
     await forTime(2000);
-    const postTextFirstMatchingPart = (/[\u1F600-\u1F6FF\s]+/.exec(postText) || '')[0].trim();
+    const postTextFirstMatchingPart = (/[\u1F600-\u1F6FF ]+/.exec(postText) || '')[0].trim();
     await clickElement(page, xpathText(postTextFirstMatchingPart));
 
     await forTime(500);
     const postUrlMobile = page.url();
     const postUrl = postUrlMobile.split('m.facebook.com').join('facebook.com');
+
+    if (postUrl === 'https://facebook.com/') {
+        throw new Error(`Something went wrong in getting postUrl.`);
+    }
 
     return { postUrl, postUrlMobile };
 }
