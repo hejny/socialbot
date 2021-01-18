@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { PORT } from './config';
+import { PORT, TOKEN } from './config';
 import { version } from '../package.json';
 import { writeAPostWithCommentOnFacebook } from './facebook/writeAPostWithCommentOnFacebook';
 
@@ -10,27 +10,30 @@ const app = express();
 app.use(bodyParser.text());
 
 app.get(['/', '/about'], (request, response) => {
-    response.send({
+    return response.send({
         version,
     });
 });
 
 app.post('/post', async (request, response) => {
-    // TODO: Add here some token to check identity of the request
-
-    const postText = request.body;
-    const commentText = request.query.commentText as string;
-
-    if (!postText && !commentText && typeof postText !== 'string' && typeof commentText !== 'string') {
-        response.status(400).send({ error: `You have not provided postText and commentText.` });
+    if (TOKEN && request.query.token !== TOKEN) {
+        return response.status(403).send({ error: `Wrong token.` });
     }
 
-    const { postUrl } = await writeAPostWithCommentOnFacebook({
-        postText,
-        commentText,
-    });
+    const postText = request.body;
+    const commentText = request.query.commentText as string | undefined;
 
-    response.send({ postUrl });
+    try {
+        const { postUrl } = await writeAPostWithCommentOnFacebook({
+            postText,
+            commentText,
+        });
+
+        return response.send({ postUrl });
+    } catch (error) {
+        response.status(500).send({ error: `Something went wrong.` });
+        throw error;
+    }
 });
 
 app.listen(PORT, () => {
