@@ -1,4 +1,4 @@
-# Socialbot
+# 🧑‍🤝‍🧑 Socialbot
 
 <!--Badges-->
 
