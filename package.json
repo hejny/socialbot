@@ -1,7 +1,7 @@
 {
   "name": "socialbot",
   "version": "0.1.0",
-  "description": " Share on social networks via headless puppeteer remotely controlled by webhook API.",
+  "description": "Share on social networks via headless puppeteer remotely controlled by webhook API.",
   "main": "./src/index.ts",
   "repository": {
     "type": "git",
