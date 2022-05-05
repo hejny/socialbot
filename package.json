@@ -5,7 +5,7 @@
   "main": "./src/index.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hejny/socialbot.git"
+    "url": "https://github.com/hejny/socialbot"
   },
   "author": "Pavol Hejny <me@pavolhejny.com> (https://pavolhejny.com)",
   "license": "SEE LICENSE IN LICENSE",
