@@ -1,7 +1,7 @@
-import express from 'express';
 import bodyParser from 'body-parser';
-import { PORT, TOKEN } from './config';
+import express from 'express';
 import { version } from '../package.json';
+import { PORT, TOKEN } from './config';
 import { writeAPostWithCommentOnFacebook } from './facebook/writeAPostWithCommentOnFacebook';
 
 const app = express();
